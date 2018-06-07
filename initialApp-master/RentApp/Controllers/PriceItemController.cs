@@ -11,53 +11,53 @@ using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
-    public class ReservationController : ApiController
+    public class PriceItemController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public ReservationController(IUnitOfWork unitOfWork)
+        public PriceItemController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Reservation> GetReservations()
+        public IEnumerable<PriceItem> GetPriceItems()
         {
-            return unitOfWork.Reservations.GetAll();
+            return unitOfWork.PriceItems.GetAll();
         }
 
-        [ResponseType(typeof(Reservation))]
-        public IHttpActionResult GetReservation(int id)
+        [ResponseType(typeof(PriceItem))]
+        public IHttpActionResult GetPriceItem(int id)
         {
-            Reservation reservation = unitOfWork.Reservations.Get(id);
-            if (reservation == null)
+            PriceItem priceitem = unitOfWork.PriceItems.Get(id);
+            if (priceitem == null)
             {
                 return NotFound();
             }
 
-            return Ok(reservation);
+            return Ok(priceitem);
         }
 
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutReservation(int id, Reservation reservation)
+        public IHttpActionResult PutPriceItem(int id, PriceItem priceitem)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != reservation.ReservationId)
+            if (id != priceitem.PriceItemId)
             {
                 return BadRequest();
             }
 
             try
             {
-                unitOfWork.Reservations.Update(reservation);
+                unitOfWork.PriceItems.Update(priceitem);
                 unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ReservationExists(id))
+                if (!PriceItemExists(id))
                 {
                     return NotFound();
                 }
@@ -70,38 +70,38 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [ResponseType(typeof(Reservation))]
-        public IHttpActionResult PostReservation(Reservation reservation)
+        [ResponseType(typeof(PriceItem))]
+        public IHttpActionResult PostPriceItem(PriceItem priceitem)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Reservations.Add(reservation);
+            unitOfWork.PriceItems.Add(priceitem);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = reservation.ReservationId }, reservation);
+            return CreatedAtRoute("DefaultApi", new { id = priceitem.PriceItemId }, priceitem);
         }
 
-        [ResponseType(typeof(Reservation))]
-        public IHttpActionResult DeleteReservation(int id)
+        [ResponseType(typeof(PriceItem))]
+        public IHttpActionResult DeletePriceItem(int id)
         {
-            Reservation reservation = unitOfWork.Reservations.Get(id);
-            if (reservation == null)
+            PriceItem priceitem = unitOfWork.PriceItems.Get(id);
+            if (priceitem == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Reservations.Remove(reservation);
+            unitOfWork.PriceItems.Remove(priceitem);
             unitOfWork.Complete();
 
-            return Ok(reservation);
+            return Ok(priceitem);
         }
 
-        private bool ReservationExists(int id)
+        private bool PriceItemExists(int id)
         {
-            return unitOfWork.Reservations.Get(id) != null;
+            return unitOfWork.PriceItems.Get(id) != null;
         }
     }
 }

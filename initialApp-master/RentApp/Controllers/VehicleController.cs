@@ -45,7 +45,7 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != vehicle.ServiceId)
+            if (id != vehicle.VehicleId)
             {
                 return BadRequest();
             }
