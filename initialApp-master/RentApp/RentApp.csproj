@@ -292,6 +292,10 @@
     <Compile Include="Migrations\201806070741364_trecaMigracija.Designer.cs">
       <DependentUpon>201806070741364_trecaMigracija.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806080906573_cetvrtaMigracija.cs" />
+    <Compile Include="Migrations\201806080906573_cetvrtaMigracija.Designer.cs">
+      <DependentUpon>201806080906573_cetvrtaMigracija.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -418,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806070741364_trecaMigracija.resx">
       <DependentUpon>201806070741364_trecaMigracija.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806080906573_cetvrtaMigracija.resx">
+      <DependentUpon>201806080906573_cetvrtaMigracija.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

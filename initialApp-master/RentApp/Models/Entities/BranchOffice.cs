@@ -9,6 +9,7 @@ namespace RentApp.Models.Entities
     public class BranchOffice
     {
         [Key]
+        public int BranchOfficeId { get; set; }
         public int ServiceId { get; set; }
         public Service Service { get; set; }
         public List<Reservation> ReservationsStart { get; set; }

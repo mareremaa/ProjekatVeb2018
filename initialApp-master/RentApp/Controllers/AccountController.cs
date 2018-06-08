@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -311,17 +312,26 @@ namespace RentApp.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public IHttpActionResult Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            //TODO:PROVERI OVO!!!
 
-            var user = new RAIdentityUser() { UserName = model.Email, Email = model.Email };
+            AppUser appUser = new AppUser() { Email = model.Email,FullName=model.FullName,DateBirth=model.DateBirth,Approved=model.Approved,CanCreate=model.CanCreate };
+            var user = new RAIdentityUser() { Id = model.Email, UserName = model.Email, Email = model.Email, PasswordHash = RAIdentityUser.HashPassword(model.Password), AppUser = appUser };
+            IdentityResult result = null;
+            try
+            {
+                result = UserManager.Create(user);
+            }
+            catch(DbEntityValidationException e)
+            {
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+            }
+            UserManager.AddToRole(user.Id, "AppUser");
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);

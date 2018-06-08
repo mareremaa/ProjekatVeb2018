@@ -39,6 +39,24 @@ namespace RentApp.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "FullName")]
+        public string FullName { get; set; }
+
+        [Required]
+        [Display(Name = "DateBirth")]
+        public DateTime DateBirth { get; set; }
+
+        [Required]
+        [Display(Name  = "Approved")]
+        public bool Approved { get; set; }
+
+        [Required]
+        [Display(Name = "CanCreate")]
+        public bool CanCreate { get; set; }
+
+        //TODO DODATI POLJA KOJA SU OBAVEZNA  U AppUser-u prilikom registracije,PROVERI OVO!!!
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
