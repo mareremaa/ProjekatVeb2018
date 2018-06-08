@@ -12,8 +12,6 @@ namespace RentApp.Migrations
             DropForeignKey("dbo.Reservations", "BranchOffice_ServiceId1", "dbo.BranchOffices");
             DropForeignKey("dbo.Reservations", "BranchOfficeFinish_ServiceId", "dbo.BranchOffices");
             DropForeignKey("dbo.Reservations", "BranchOfficeStart_ServiceId", "dbo.BranchOffices");
-            AddPrimaryKey("dbo.BranchOffices", "BranchOfficeId");
-
             DropIndex("dbo.BranchOffices", new[] { "Service_Id" });
             DropColumn("dbo.BranchOffices", "ServiceId");
             RenameColumn(table: "dbo.Reservations", name: "BranchOfficeFinish_ServiceId", newName: "BranchOfficeFinish_BranchOfficeId");
@@ -29,6 +27,7 @@ namespace RentApp.Migrations
             AddColumn("dbo.BranchOffices", "BranchOfficeId", c => c.Int(nullable: false, identity: true));
             AlterColumn("dbo.BranchOffices", "ServiceId", c => c.Int(nullable: false));
             AlterColumn("dbo.BranchOffices", "ServiceId", c => c.Int(nullable: false));
+            AddPrimaryKey("dbo.BranchOffices", "BranchOfficeId");
             CreateIndex("dbo.BranchOffices", "ServiceId");
             AddForeignKey("dbo.BranchOffices", "ServiceId", "dbo.Services", "Id", cascadeDelete: true);
             AddForeignKey("dbo.Reservations", "BranchOffice_BranchOfficeId", "dbo.BranchOffices", "BranchOfficeId");
