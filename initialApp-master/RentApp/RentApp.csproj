@@ -280,21 +280,9 @@
     <Compile Include="Migrations\201806031439020_Initial.Designer.cs">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806060656510_prvaMigracija.cs" />
-    <Compile Include="Migrations\201806060656510_prvaMigracija.Designer.cs">
-      <DependentUpon>201806060656510_prvaMigracija.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806060849186_drugaMigracija.cs" />
-    <Compile Include="Migrations\201806060849186_drugaMigracija.Designer.cs">
-      <DependentUpon>201806060849186_drugaMigracija.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806070741364_trecaMigracija.cs" />
-    <Compile Include="Migrations\201806070741364_trecaMigracija.Designer.cs">
-      <DependentUpon>201806070741364_trecaMigracija.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806080906573_cetvrtaMigracija.cs" />
-    <Compile Include="Migrations\201806080906573_cetvrtaMigracija.Designer.cs">
-      <DependentUpon>201806080906573_cetvrtaMigracija.cs</DependentUpon>
+    <Compile Include="Migrations\201806091803572_nova.cs" />
+    <Compile Include="Migrations\201806091803572_nova.Designer.cs">
+      <DependentUpon>201806091803572_nova.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -414,17 +402,8 @@
     <EmbeddedResource Include="Migrations\201806031439020_Initial.resx">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806060656510_prvaMigracija.resx">
-      <DependentUpon>201806060656510_prvaMigracija.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806060849186_drugaMigracija.resx">
-      <DependentUpon>201806060849186_drugaMigracija.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806070741364_trecaMigracija.resx">
-      <DependentUpon>201806070741364_trecaMigracija.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806080906573_cetvrtaMigracija.resx">
-      <DependentUpon>201806080906573_cetvrtaMigracija.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806091803572_nova.resx">
+      <DependentUpon>201806091803572_nova.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
