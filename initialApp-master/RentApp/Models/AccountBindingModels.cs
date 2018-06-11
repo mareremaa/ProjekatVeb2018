@@ -46,13 +46,7 @@ namespace RentApp.Models
         [Display(Name = "DateBirth")]
         public DateTime DateBirth { get; set; }
 
-        [Required]
-        [Display(Name  = "Approved")]
-        public bool Approved { get; set; }
-
-        [Required]
-        [Display(Name = "CanCreate")]
-        public bool CanCreate { get; set; }
+       
 
         //TODO DODATI POLJA KOJA SU OBAVEZNA  U AppUser-u prilikom registracije,PROVERI OVO!!!
 

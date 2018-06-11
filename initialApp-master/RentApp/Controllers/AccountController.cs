@@ -320,18 +320,19 @@ namespace RentApp.Controllers
             }
             //TODO:PROVERI OVO!!!
 
-            AppUser appUser = new AppUser() { Email = model.Email,FullName=model.FullName,DateBirth=model.DateBirth,Approved=model.Approved,CanCreate=model.CanCreate };
-            var user = new RAIdentityUser() { Id = model.Email, UserName = model.Email, Email = model.Email, PasswordHash = RAIdentityUser.HashPassword(model.Password), AppUser = appUser };
+            AppUser appUser = new AppUser() { Email = model.Email,FullName=model.FullName,DateBirth=model.DateBirth };
+            var user = new RAIdentityUser() { UserName = model.Email, Email = model.Email, PasswordHash = RAIdentityUser.HashPassword(model.Password), AppUser = appUser };
             IdentityResult result = null;
             try
             {
                 result = UserManager.Create(user);
+                UserManager.AddToRole(user.Id, "AppUser");
             }
             catch(DbEntityValidationException e)
             {
 
             }
-            UserManager.AddToRole(user.Id, "AppUser");
+            
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
