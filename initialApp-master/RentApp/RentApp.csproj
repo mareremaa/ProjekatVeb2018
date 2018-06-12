@@ -280,9 +280,9 @@
     <Compile Include="Migrations\201806031439020_Initial.Designer.cs">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806091803572_nova.cs" />
-    <Compile Include="Migrations\201806091803572_nova.Designer.cs">
-      <DependentUpon>201806091803572_nova.cs</DependentUpon>
+    <Compile Include="Migrations\201806122112151_nova.cs" />
+    <Compile Include="Migrations\201806122112151_nova.Designer.cs">
+      <DependentUpon>201806122112151_nova.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -402,8 +402,8 @@
     <EmbeddedResource Include="Migrations\201806031439020_Initial.resx">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806091803572_nova.resx">
-      <DependentUpon>201806091803572_nova.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806122112151_nova.resx">
+      <DependentUpon>201806122112151_nova.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

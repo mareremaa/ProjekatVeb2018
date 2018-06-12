@@ -22,7 +22,7 @@ namespace RentApp.Migrations
                         BranchOffice_BranchOfficeId1 = c.Int(),
                     })
                 .PrimaryKey(t => t.ReservationId)
-                .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: true)
+                .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: false)
                 .ForeignKey("dbo.BranchOffices", t => t.BranchOffice_BranchOfficeId)
                 .ForeignKey("dbo.BranchOffices", t => t.BranchOffice_BranchOfficeId1)
                 .ForeignKey("dbo.BranchOffices", t => t.BranchOfficeFinishId, cascadeDelete: false)
@@ -45,7 +45,7 @@ namespace RentApp.Migrations
                         Address = c.String(),
                     })
                 .PrimaryKey(t => t.BranchOfficeId)
-                .ForeignKey("dbo.Services", t => t.ServiceId, cascadeDelete: true)
+                .ForeignKey("dbo.Services", t => t.ServiceId, cascadeDelete: false)
                 .Index(t => t.ServiceId);
             
             CreateTable(
@@ -56,7 +56,7 @@ namespace RentApp.Migrations
                         ServiceId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.PriceListId)
-                .ForeignKey("dbo.Services", t => t.ServiceId, cascadeDelete: true)
+                .ForeignKey("dbo.Services", t => t.ServiceId, cascadeDelete: false)
                 .Index(t => t.ServiceId);
             
             CreateTable(
@@ -70,8 +70,8 @@ namespace RentApp.Migrations
                         Avaliable = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.PriceItemId)
-                .ForeignKey("dbo.PriceLists", t => t.PriceListId, cascadeDelete: true)
-                .ForeignKey("dbo.Vehicles", t => t.VehicleId, cascadeDelete: true)
+                .ForeignKey("dbo.PriceLists", t => t.PriceListId, cascadeDelete: false)
+                .ForeignKey("dbo.Vehicles", t => t.VehicleId, cascadeDelete: false)
                 .Index(t => t.PriceListId)
                 .Index(t => t.VehicleId);
             
@@ -102,7 +102,7 @@ namespace RentApp.Migrations
                         DescriptionScore = c.String(),
                     })
                 .PrimaryKey(t => t.ReviewId)
-                .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: true)
+                .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: false)
                 .ForeignKey("dbo.Services", t => t.ServiceId, cascadeDelete: false)
                 .Index(t => t.ServiceId)
                 .Index(t => t.AppUserId);

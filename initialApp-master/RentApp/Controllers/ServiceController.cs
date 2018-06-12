@@ -14,6 +14,7 @@ using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
+    [RoutePrefix("api/Services")]
     public class ServiceController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -22,7 +23,7 @@ namespace RentApp.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-
+        [Route("All")]
         public IEnumerable<Service> GetServices()
         {
             return unitOfWork.Services.GetAll();
