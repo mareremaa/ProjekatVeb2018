@@ -39,7 +39,7 @@ namespace RentApp.Controllers
 
             return Ok(service);
         }
-
+        
         [ResponseType(typeof(void))]
         public IHttpActionResult PutService(int id, Service service)
         {
