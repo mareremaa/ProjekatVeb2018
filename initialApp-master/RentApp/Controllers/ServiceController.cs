@@ -42,6 +42,7 @@ namespace RentApp.Controllers
         }
         
         [ResponseType(typeof(void))]
+        [Route("PutService")]
         public IHttpActionResult PutService(int id, Service service)
         {
             if (!ModelState.IsValid)
@@ -75,6 +76,7 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Service))]
+        [Route("PostService")]
         public IHttpActionResult PostService(Service service)
         {
             if (!ModelState.IsValid)
