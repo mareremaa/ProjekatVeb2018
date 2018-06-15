@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
@@ -18,12 +19,12 @@ namespace RentApp.Controllers
     public class ServiceController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-
-        public ServiceController(IUnitOfWork unitOfWork)
+        public ApplicationUserManager UserManager { get; set; }
+        public ServiceController(IUnitOfWork unitOfWork, ApplicationUserManager userManager)
         {
+            UserManager = userManager;
             this.unitOfWork = unitOfWork;
         }
-        [Route("All")]
         public IEnumerable<Service> GetServices()
         {
             return unitOfWork.Services.GetAll();
@@ -42,27 +43,23 @@ namespace RentApp.Controllers
         }
         
         [ResponseType(typeof(void))]
-        [Route("PutService")]
-        public IHttpActionResult PutService(int id, Service service)
+        public IHttpActionResult PutService(Service service)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != service.Id)
-            {
-                return BadRequest();
-            }
-
+            
             try
             {
+               
                 unitOfWork.Services.Update(service);
                 unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ServiceExists(id))
+                if (!ServiceExists(service.Id))
                 {
                     return NotFound();
                 }
@@ -76,18 +73,22 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Service))]
-        [Route("PostService")]
-        public IHttpActionResult PostService(Service service)
+        public IHttpActionResult PostService(ServiceFront service)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            unitOfWork.Services.Add(service);
+            var user = UserManager.Users.FirstOrDefault(u => u.Id == service.UserName);
+            Service zaUpis = new Service();
+            zaUpis.AppUserId = user.AppUserId;
+            zaUpis.Description = service.Description;
+            zaUpis.Email = service.Email;
+            zaUpis.Name = service.Name;
+            unitOfWork.Services.Add(zaUpis);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
+            return CreatedAtRoute("DefaultApi", new { id = zaUpis.Id }, zaUpis);
         }
 
         [ResponseType(typeof(Service))]

@@ -1,4 +1,5 @@
-﻿using RentApp.Models.Entities;
+﻿using RentApp.Models;
+using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,11 @@ namespace RentApp.Controllers
     public class BranchOfficeController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        public ApplicationUserManager UserManager { get; set; }
 
-        public BranchOfficeController(IUnitOfWork unitOfWork)
+        public BranchOfficeController(IUnitOfWork unitOfWork, ApplicationUserManager userManager)
         {
+            UserManager = userManager;
             this.unitOfWork = unitOfWork;
         }
 
@@ -71,17 +74,28 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(BranchOffice))]
-        public IHttpActionResult PostBranchOffice(BranchOffice off)
+        public IHttpActionResult PostBranchOffice(BranchOfficeFront off)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            List<Service> listaServisa = (List<Service>)unitOfWork.Services.GetAll();
+            BranchOffice zaBazu = new BranchOffice();
+            zaBazu.Address = off.Address;
+            foreach(var sc in listaServisa)
+            {
+                if (sc.Name == off.ServiceName)
+                {
+                    zaBazu.ServiceId = sc.Id;
+                    break;
+                }
+            }
 
-            unitOfWork.BranchOffices.Add(off);
+            unitOfWork.BranchOffices.Add(zaBazu);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = off.BranchOfficeId }, off);
+            return CreatedAtRoute("DefaultApi", new { id = zaBazu.BranchOfficeId }, zaBazu);
         }
 
         [ResponseType(typeof(BranchOffice))]
