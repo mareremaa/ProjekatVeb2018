@@ -1,4 +1,5 @@
-﻿using RentApp.Models.Entities;
+﻿using RentApp.Models;
+using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -71,17 +72,33 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult PostVehicle(Vehicle vehicle)
+        public IHttpActionResult PostVehicle(CarFront vehicle)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            List<Service> listaServisa = (List<Service>)unitOfWork.Services.GetAll();
 
-            unitOfWork.Vehicles.Add(vehicle);
+            Vehicle zaBazu = new Vehicle();
+            zaBazu.Description = vehicle.Description;
+            zaBazu.Maker = vehicle.Maker;
+            zaBazu.Model = vehicle.Model;
+            zaBazu.YearOfMaking = vehicle.YearOfMaking;
+            foreach (var sc in listaServisa)
+            {
+                if (sc.Name == vehicle.ServiceName)
+                {
+                    zaBazu.ServiceId = sc.Id;
+                    break;
+                }
+            }
+
+
+            unitOfWork.Vehicles.Add(zaBazu);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = vehicle.VehicleId }, vehicle);
+            return CreatedAtRoute("DefaultApi", new { id = zaBazu.VehicleId }, zaBazu);
         }
 
         [ResponseType(typeof(Vehicle))]
