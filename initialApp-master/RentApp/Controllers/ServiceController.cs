@@ -43,33 +43,29 @@ namespace RentApp.Controllers
         }
         
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutService(Service service)
+        public IHttpActionResult PutService(ServiceFront service)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            
-            try
+            Service s1 = new Service();
+            List<Service> listaServisa = (List<Service>)unitOfWork.Services.GetAll();
+            foreach (var sc in listaServisa)
             {
-               
-                unitOfWork.Services.Update(service);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ServiceExists(service.Id))
+                if (sc.Name == service.Name)
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    s1 = sc;
+                    break;
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+
+            unitOfWork.Services.ApproveService(s1.Id);
+            unitOfWork.Complete();
+
+
+            return Ok();
         }
 
         [ResponseType(typeof(Service))]

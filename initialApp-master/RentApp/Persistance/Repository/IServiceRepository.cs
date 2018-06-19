@@ -8,5 +8,6 @@ namespace RentApp.Persistance.Repository
 {
     public interface IServiceRepository : IRepository<Service, int>
     {
+        void ApproveService(int id);
     }
 }
