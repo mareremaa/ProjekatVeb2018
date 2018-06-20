@@ -14,5 +14,18 @@ namespace RentApp.Persistance.Repository
         }
 
         protected RADBContext DemoContext { get { return context as RADBContext; } }
+
+
+        protected RADBContext RAContext
+        {
+            get => context as RADBContext;
+        }
+
+        public void ApproveUser(int id)
+        {
+            var user = RAContext.AppUsers.FirstOrDefault(s => s.Id == id);
+            user.Approved = true;
+            RAContext.Entry(user).State = EntityState.Modified;
+        }
     }
 }

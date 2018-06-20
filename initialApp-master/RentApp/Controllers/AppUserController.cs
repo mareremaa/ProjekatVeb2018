@@ -1,4 +1,5 @@
-﻿using RentApp.Models.Entities;
+﻿using RentApp.Models;
+using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,12 @@ namespace RentApp.Controllers
     public class AppUserController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        public ApplicationUserManager UserManager { get; set; }
 
-        public AppUserController(IUnitOfWork unitOfWork)
+        public AppUserController(IUnitOfWork unitOfWork, ApplicationUserManager userManager)
         {
+            UserManager = userManager;
+
             this.unitOfWork = unitOfWork;
         }
 
@@ -37,37 +41,62 @@ namespace RentApp.Controllers
             return Ok(user);
         }
 
+
+        [HttpGet]
+        [Route("api/AppUser/GetLogUser/{username}")]
+
+        public IHttpActionResult GetLogUser(string username)
+        {
+
+            var user = UserManager.Users.FirstOrDefault(u => u.Id == username);
+            AppUser userRet = new AppUser();
+            List<AppUser> listaKorisnika = (List<AppUser>)unitOfWork.Users.GetAll();
+            foreach(var u in listaKorisnika)
+            {
+                if (u.Email == user.Email)
+                {
+                    userRet = u;
+                    break;
+                }
+            }
+            if (userRet.Approved == true)
+            {
+                return Ok("true");
+            }
+            else
+            {
+                return Ok("false");
+
+            }
+
+        }
+
+
+
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id, AppUser user)
+        public IHttpActionResult PutUser(UserFront user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != user.Id)
+            AppUser u1 = new AppUser();
+            List<AppUser> listaUsera = (List<AppUser>)unitOfWork.Users.GetAll();
+            foreach (var u in listaUsera)
             {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Users.Update(user);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
+                if (u.Email == user.Email)
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    u1 = u;
+                    break;
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+
+            unitOfWork.Users.ApproveUser(u1.Id);
+            unitOfWork.Complete();
+
+
+            return Ok();
         }
 
         [ResponseType(typeof(AppUser))]

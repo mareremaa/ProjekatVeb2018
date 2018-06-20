@@ -299,6 +299,7 @@
     <Compile Include="Models\Entities\Service.cs" />
     <Compile Include="Models\Entities\Vehicle.cs" />
     <Compile Include="Models\ServiceFront.cs" />
+    <Compile Include="Models\UserFront.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\BranchOfficeRepository.cs" />
     <Compile Include="Persistance\Repository\IBranchOfficeRepository.cs" />

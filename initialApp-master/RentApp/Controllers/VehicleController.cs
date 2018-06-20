@@ -26,6 +26,16 @@ namespace RentApp.Controllers
             return unitOfWork.Vehicles.GetAll();
         }
 
+
+
+        [HttpGet]
+        [Route("api/Vehicle/GetServiceVehicles/{serviceName}")]
+        public IEnumerable<Vehicle> GetServiceVehicles(string serviceName)
+        {
+            return unitOfWork.Vehicles.GetServiceVehicles(serviceName);
+        }
+
+
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult GetVehicle(int id)
         {

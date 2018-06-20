@@ -9,5 +9,7 @@ namespace RentApp.Persistance.Repository
 {
     public interface IUserRepository : IRepository<AppUser, int>
     {
+        void ApproveUser(int id);
+
     }
 }
