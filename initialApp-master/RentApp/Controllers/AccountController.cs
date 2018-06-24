@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -324,22 +325,30 @@ namespace RentApp.Controllers
             AppUser appUser = new AppUser() { Email = model.Email,FullName=model.FullName,DateBirth=model.DateBirth };
             var user = new RAIdentityUser() { UserName = model.Email, Email = model.Email, PasswordHash = RAIdentityUser.HashPassword(model.Password), AppUser = appUser };
             IdentityResult result = null;
-            try
-            {
-                result = UserManager.Create(user);
-                UserManager.AddToRole(user.Id, "AppUser");
-            }
-            catch(DbEntityValidationException e)
-            {
 
-            }
-            
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
+            var user1 = UserManager.Users.FirstOrDefault(u => u.Email == model.Email);
 
-            return Ok();
+
+            if (user1 == null)
+            {
+                try
+                {
+                    result = UserManager.Create(user);
+                    UserManager.AddToRole(user.Id, "AppUser");
+                }
+                catch (DbEntityValidationException e)
+                {
+
+                }
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
+
+                return Ok();
+            }
+            return Conflict();
         }
 
         // POST api/Account/RegisterExternal
