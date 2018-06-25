@@ -14,5 +14,25 @@ namespace RentApp.Persistance.Repository
         }
 
         protected RADBContext DemoContext { get { return context as RADBContext; } }
+
+        public IEnumerable<BranchOffice> GetSomeBranches(string serviceName)
+        {
+            List<BranchOffice> BranchRet = new List<BranchOffice>();
+            List<BranchOffice> BranchAll = RAContext.BranchOffices.ToList();
+            Service service = RAContext.Services.FirstOrDefault(s => s.Name == serviceName);
+            foreach(var br in BranchAll)
+            {
+                if (br.ServiceId == service.Id)
+                {
+                    BranchRet.Add(br);
+                }
+            }
+            return BranchRet;
+        }
+
+        protected RADBContext RAContext
+        {
+            get => context as RADBContext;
+        }
     }
 }

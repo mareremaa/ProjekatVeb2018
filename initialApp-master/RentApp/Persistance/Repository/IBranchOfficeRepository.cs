@@ -9,5 +9,7 @@ namespace RentApp.Persistance.Repository
 {
     public interface IBranchOfficeRepository : IRepository<BranchOffice, int>
     {
+        IEnumerable<BranchOffice> GetSomeBranches(string serviceName);
+
     }
 }

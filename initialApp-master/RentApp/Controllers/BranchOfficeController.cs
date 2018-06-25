@@ -28,6 +28,19 @@ namespace RentApp.Controllers
             return unitOfWork.BranchOffices.GetAll();
         }
 
+        [HttpGet]
+        [Route("api/BranchOffice/GetSomeBranch/{serviceName}")]
+        public IEnumerable<BranchOffice> GetSomeBranch(string serviceName)
+        {
+            return unitOfWork.BranchOffices.GetSomeBranches(serviceName);
+
+
+
+        }
+
+
+
+
         [ResponseType(typeof(BranchOffice))]
         public IHttpActionResult GetBranchOffice(int id)
         {
@@ -92,10 +105,19 @@ namespace RentApp.Controllers
                 }
             }
 
+            List<BranchOffice> sviBranc = (List<BranchOffice>)unitOfWork.BranchOffices.GetAll();
+            foreach (var sc in sviBranc)
+            {
+                if (sc.Address == zaBazu.Address)
+                {
+                    return Conflict();
+                }
+            }
+
             unitOfWork.BranchOffices.Add(zaBazu);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = zaBazu.BranchOfficeId }, zaBazu);
+            return Ok();
         }
 
         [ResponseType(typeof(BranchOffice))]

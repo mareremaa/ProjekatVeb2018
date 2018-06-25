@@ -81,10 +81,21 @@ namespace RentApp.Controllers
             zaUpis.Description = service.Description;
             zaUpis.Email = service.Email;
             zaUpis.Name = service.Name;
+            List<Service> sviServisi = (List<Service>)unitOfWork.Services.GetAll();
+            foreach(var sc in sviServisi)
+            {
+                if (sc.Name == zaUpis.Name)
+                {
+                    return Conflict();
+                }
+            }
+
+
+
             unitOfWork.Services.Add(zaUpis);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = zaUpis.Id }, zaUpis);
+            return Ok();
         }
 
         [ResponseType(typeof(Service))]

@@ -298,6 +298,7 @@
     <Compile Include="Models\Entities\Review.cs" />
     <Compile Include="Models\Entities\Service.cs" />
     <Compile Include="Models\Entities\Vehicle.cs" />
+    <Compile Include="Models\ReservationFront.cs" />
     <Compile Include="Models\ServiceFront.cs" />
     <Compile Include="Models\UserFront.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
